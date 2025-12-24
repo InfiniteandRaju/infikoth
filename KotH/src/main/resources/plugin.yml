@@ -1,0 +1,39 @@
+name: Koth
+version: '${version}'
+main: com.groupez.koth.KotH
+api-version: '1.21'
+author: YourName
+description: iKoth plugin with boss bar display
+
+commands:
+  koth:
+    description: Main KoTH command
+    usage: /<command> [start|stop|create|delete|list|reload|info|help]
+    aliases: [kingofthehill, ikoth]
+    permission: koth.command
+
+permissions:
+  koth.command:
+    description: Allows use of koth commands
+    default: op
+  koth.start:
+    description: Allows starting KoTH events
+    default: op
+  koth.stop:
+    description: Allows stopping KoTH events
+    default: op
+  koth.create:
+    description: Allows creating KoTH hills
+    default: op
+  koth.delete:
+    description: Allows deleting KoTH hills
+    default: op
+  koth.list:
+    description: Allows listing KoTH hills
+    default: true
+  koth.info:
+    description: Allows viewing KoTH hill info
+    default: true
+  koth.reload:
+    description: Allows reloading configuration
+    default: op
