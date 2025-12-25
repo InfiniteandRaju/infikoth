@@ -1,0 +1,46 @@
+# Infikoth Configuration
+
+messages:
+  prefix: "&8[&6&lInfikoth&8] &r"
+  hill-start: "&7The &e&n%hill%&r &7KoTH event has &a&lSTARTED&7! &8(&f%time%s&8)"
+  hill-captured: "&e%player% &7has &6&lCAPTURED &7the &e%hill% &7area! &e&lGG!"
+  hill-stopped: "&c&l! &7The &c%hill% &7event has been forcefully ended."
+  hill-contested: "&e&l⚠ &cHill is currently contested!"
+  start-capturing: "&a&l» &e%player% &7is now controlling &e%hill%&7!"
+  capture-progress: "&8[&6&l!&8] &e%hill% &7Capture: &f%time%s &7remaining..."
+  capture-interrupted: "&c&l✕ &7Capture lost! &c%player% &7left the zone."
+  reward-message: "&a&l✔ &7You received captured rewards for &e%hill%&7!"
+  reward-broadcast: "&6&l» &e%player% &7secured the loot from &6%hill%&7!"
+  actionbar-capturing: "&6&lCAPTURING &8» &e%time%s &7remaining"
+  actionbar-waiting: "&7Stand inside &e%hill% &7to capture it!"
+  bossbar-capturing: "&6&lInfikoth &8| &e%hill% &8» &f%player% &7(&6%time%s&7)"
+  bossbar-waiting: "&6&lInfikoth &8| &e%hill% &7(Uncontrolled)"
+  bossbar-inactive: "&8&lInfikoth &8| &7Waiting..."
+
+titles:
+  enabled: true
+  start-title: "&#FFD700&lInfikoth Event"
+  start-subtitle: "&7The &f%hill% &7has begun!"
+  capture-start-title: "&a&lCONTROLLING"
+  capture-start-subtitle: "&7Hold the point!"
+  win-title: "&6&lHILL CAPTURED!"
+  win-subtitle: "&a%player% &7won &e%hill%&7!"
+  contest-title: "&c&lHILL CONTESTED!"
+  contest-subtitle: "&7Multiple players detected"
+
+bossbar:
+  enabled: true
+  update-interval: 1
+
+rewards:
+  enabled: true
+  broadcast-rewards: true
+  commands:
+    - "give %player% minecraft:diamond 5"
+    - "give %player% minecraft:emerald 3"
+    - "give %player% minecraft:gold_ingot 10"
+    - "xp give %player% 50 levels"
+    - "effect give %player% minecraft:speed 30 1"
+
+# Hills configuration
+hills: {}
