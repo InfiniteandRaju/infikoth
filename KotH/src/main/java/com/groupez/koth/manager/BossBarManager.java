@@ -1,137 +1,72 @@
-package com.groupez.koth.manager;
+package com.groupez.koth;
 
-import com.groupez.koth.KotH;
-import com.groupez.koth.hill.Hill;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
-import org.bukkit.entity.Player;
+import com.groupez.koth.manager.BossBarManager;
+import com.groupez.koth.hill.HillManager;
+import com.groupez.koth.commands.CommandManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class BossBarManager {
-
-    private final KotH plugin;
-    private final Map<String, BossBar> bossBars = new HashMap<>();
-
-    public BossBarManager(KotH plugin) {
-        this.plugin = plugin;
+public class KotH extends JavaPlugin {
+    
+    private static KotH instance;
+    private BossBarManager bossBarManager;
+    private HillManager hillManager;
+    private CommandManager commandManager;
+    
+    @Override
+    public void onEnable() {
+        instance = this;
+        
+        // Save default config if it doesn't exist
+        this.saveDefaultConfig();
+        
+        // Initialize managers in the CORRECT ORDER
+        // 1. First create BossBarManager
+        this.bossBarManager = new BossBarManager(this);
+        
+        // 2. Then create HillManager (which needs BossBarManager)
+        this.hillManager = new HillManager(this);
+        
+        // 3. Then create CommandManager
+        this.commandManager = new CommandManager(this);
+        
+        // 4. Register command
+        this.getCommand("infikoth").setExecutor(commandManager);
+        this.getCommand("infikoth").setTabCompleter(commandManager);
+        
+        // 5. Load hills AFTER everything is initialized
+        // This should be called from HillManager constructor or a separate init method
+        // If loadHillsFromConfig() is called in HillManager constructor, that's fine now
+        
+        getLogger().info("§a========================================");
+        getLogger().info("§aInfiKoth v1.0.0 has been enabled!");
+        getLogger().info("§aUse §e/infikoth help §afor commands");
+        getLogger().info("§a========================================");
     }
-
-    public void createHillBossBar(Hill hill) {
-        String hillName = hill.getName();
-
-        if (bossBars.containsKey(hillName)) {
-            removeHillBossBar(hillName);
+    
+    @Override
+    public void onDisable() {
+        // Clean up boss bars when disabling
+        if (bossBarManager != null) {
+            bossBarManager.cleanup();
         }
-
-        BossBar bossBar = Bukkit.createBossBar(
-                getBossBarTitle(hill, null),
-                BarColor.PURPLE,
-                BarStyle.SOLID
-        );
-
-        bossBar.setVisible(false);
-        bossBars.put(hillName, bossBar);
+        
+        getLogger().info("§cInfiKoth has been disabled!");
     }
-
-    public void updateHillBossBar(Hill hill) {
-        if (!plugin.getConfigManager().isBossBarEnabled()) return;
-
-        String hillName = hill.getName();
-        BossBar bossBar = bossBars.get(hillName);
-
-        if (bossBar == null) {
-            createHillBossBar(hill);
-            bossBar = bossBars.get(hillName);
-        }
-
-        if (hill.isActive()) {
-            Player capturer = hill.getCurrentCapturer();
-            int timeLeft = hill.getTimeLeft();
-
-            if (capturer != null && timeLeft > 0) {
-                // Update boss bar for active capture
-                double progress = (double) timeLeft / hill.getCaptureTime();
-                bossBar.setProgress(Math.max(0.0, Math.min(1.0, progress)));
-                bossBar.setTitle(getBossBarTitle(hill, capturer));
-                bossBar.setColor(getColorByProgress(progress));
-                bossBar.setVisible(true);
-
-                // Add all online players in the world to the boss bar
-                for (Player player : hill.getCenter().getWorld().getPlayers()) {
-                    if (!bossBar.getPlayers().contains(player)) {
-                        bossBar.addPlayer(player);
-                    }
-                }
-            } else {
-                // Hill is active but no one is capturing
-                bossBar.setTitle(getBossBarTitle(hill, null));
-                bossBar.setColor(BarColor.PURPLE);
-                bossBar.setProgress(1.0);
-                bossBar.setVisible(true);
-
-                // Add all online players in the world
-                for (Player player : hill.getCenter().getWorld().getPlayers()) {
-                    if (!bossBar.getPlayers().contains(player)) {
-                        bossBar.addPlayer(player);
-                    }
-                }
-            }
-        } else {
-            // Hill is not active, hide boss bar
-            bossBar.setVisible(false);
-            bossBar.removeAll();
-        }
+    
+    // Getters for other classes to access managers
+    public static KotH getInstance() {
+        return instance;
     }
-
-    private String getBossBarTitle(Hill hill, Player capturer) {
-        String hillName = hill.getName();
-        int timeLeft = hill.getTimeLeft();
-
-        if (capturer != null) {
-            return plugin.getConfigManager().getMessage("bossbar-capturing",
-                    "%hill%", hillName,
-                    "%player%", capturer.getName(),
-                    "%time%", String.valueOf(timeLeft));
-        } else if (hill.isActive()) {
-            return plugin.getConfigManager().getMessage("bossbar-waiting",
-                    "%hill%", hillName);
-        } else {
-            return plugin.getConfigManager().getMessage("bossbar-inactive",
-                    "%hill%", hillName);
-        }
+    
+    public BossBarManager getBossBarManager() {
+        return bossBarManager;
     }
-
-    private BarColor getColorByProgress(double progress) {
-        if (progress > 0.66) return BarColor.GREEN;
-        if (progress > 0.33) return BarColor.YELLOW;
-        return BarColor.RED;
+    
+    public HillManager getHillManager() {
+        return hillManager;
     }
-
-    public void removeHillBossBar(String hillName) {
-        BossBar bossBar = bossBars.get(hillName);
-        if (bossBar != null) {
-            bossBar.removeAll();
-            bossBar.setVisible(false);
-            bossBars.remove(hillName);
-        }
-    }
-
-    public void updateAllBossBars() {
-        for (Hill hill : plugin.getHillManager().getHills()) {
-            updateHillBossBar(hill);
-        }
-    }
-
-    public void cleanup() {
-        for (BossBar bossBar : bossBars.values()) {
-            bossBar.removeAll();
-            bossBar.setVisible(false);
-        }
-        bossBars.clear();
+    
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 }
