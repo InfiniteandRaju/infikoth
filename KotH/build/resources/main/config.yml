@@ -1,0 +1,47 @@
+# Infikoth Configuration
+# Premium King of the Hill Plugin
+
+messages:
+  prefix: "&#FFD700&lInfikoth &8»&r"
+  hill-start: "&7The &#FFA500&l%hill% &7KoTH event has &#00FF00&lSTARTED&7! &8(&f%time%s&8)"
+  hill-captured: "&#FFD700&l%player% &7has &#FFA500&lCAPTURED &7the &#FFD700%hill% &7area! &e&lGG!"
+  hill-stopped: "&#FF0000&l! &7The &#FF0000%hill% &7event has been forcefully ended."
+  hill-contested: "&#FFA500&l⚠ &cHill is currently contested!"
+  start-capturing: "&#00FF00&l» &#FFD700%player% &7is now controlling &#FFA500%hill%&7!"
+  capture-progress: "&8[&#FFA500&l!&8] &#FFD700%hill% &7Capture: &f%time%s &7remaining..."
+  capture-interrupted: "&#FF0000&l✕ &7Capture lost! &#FF0000%player% &7left the zone."
+  reward-message: "&#00FF00&l✔ &7You received captured rewards for &#FFD700%hill%&7!"
+  reward-broadcast: "&#FFD700&l» &#FFA500%player% &7secured the loot from &#FFD700%hill%&7!"
+  actionbar-capturing: "&#FFA500&lCAPTURING &8» &#FFD700%time%s &7remaining"
+  actionbar-waiting: "&7Stand inside &#FFD700%hill% &7to capture it!"
+  bossbar-capturing: "&#FFD700&lInfikoth &8| &#FFA500%hill% &8» &f%player% &7(&#FFD700%time%s&7)"
+  bossbar-waiting: "&#FFD700&lInfikoth &8| &#FFA500%hill% &7(Uncontrolled)"
+  bossbar-inactive: "&8&lInfikoth &8| &7Waiting..."
+
+titles:
+  enabled: true
+  start-title: "&#FFD700&lInfikoth Event"
+  start-subtitle: "&7The &#FFA500%hill% &7has begun!"
+  capture-start-title: "&#00FF00&lCONTROLLING"
+  capture-start-subtitle: "&7Hold the point!"
+  win-title: "&#FFD700&lHILL CAPTURED!"
+  win-subtitle: "&#00FF00%player% &7won &#FFA500%hill%&7!"
+  contest-title: "&#FF0000&lHILL CONTESTED!"
+  contest-subtitle: "&7Multiple players detected"
+
+bossbar:
+  enabled: true
+  update-interval: 1
+
+rewards:
+  enabled: true
+  broadcast-rewards: true
+  commands:
+    - "give %player% minecraft:diamond 5"
+    - "give %player% minecraft:emerald 3"
+    - "give %player% minecraft:gold_ingot 10"
+    - "xp give %player% 50 levels"
+    - "effect give %player% minecraft:speed 30 1"
+
+# Hills configuration
+hills: {}

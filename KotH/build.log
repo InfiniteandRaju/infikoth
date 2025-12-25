@@ -1,0 +1,72 @@
+> Task :clean
+
+> Task :compileJava FAILED
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:18: error: KothCommand is not abstract and does not override abstract method onTabComplete(CommandSender,Command,String,String[]) in TabCompleter
+public class KothCommand implements CommandExecutor, TabCompleter {
+       ^
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:31: error: cannot find symbol
+            sendHelp(sender);
+            ^
+  symbol:   method sendHelp(CommandSender)
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:62: error: cannot find symbol
+                sendHelp(sender);
+                ^
+  symbol:   method sendHelp(CommandSender)
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:357: error: cannot find symbol
+        if (args.length == 1) {
+            ^
+  symbol:   variable args
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:359: error: cannot find symbol
+                if (subCommand.startsWith(args[0].toLowerCase())) {
+                                          ^
+  symbol:   variable args
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:360: error: cannot find symbol
+                    completions.add(subCommand);
+                    ^
+  symbol:   variable completions
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:363: error: cannot find symbol
+        } else if (args.length == 2) {
+                   ^
+  symbol:   variable args
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:364: error: cannot find symbol
+            String subCommand = args[0].toLowerCase();
+                                ^
+  symbol:   variable args
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:369: error: cannot find symbol
+                    if (name.toLowerCase().startsWith(args[1].toLowerCase())) {
+                                                      ^
+  symbol:   variable args
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:370: error: cannot find symbol
+                        completions.add(name);
+                        ^
+  symbol:   variable completions
+  location: class KothCommand
+C:\Users\RDP\.gemini\antigravity\playground\kinetic-prominence\KotH\src\main\java\com\groupez\koth\commands\KothCommand.java:376: error: cannot find symbol
+        return completions;
+               ^
+  symbol:   variable completions
+  location: class KothCommand
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+11 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 2s
+2 actionable tasks: 2 executed
